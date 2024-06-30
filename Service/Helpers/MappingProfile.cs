@@ -30,7 +30,8 @@ namespace Service.Helpers
             // Students
             CreateMap<StudentCreateDto, Student>();
             CreateMap<Student, StudentDto>()
-                .ForMember(dest => dest.Groups, opt => opt.MapFrom(src => src.GroupsStudents.Select(gs => gs.Group)));
+                .ForMember(dest => dest.Groups, opt => opt.MapFrom(src => src.GroupsStudents.Select(gs => gs.Group)))
+                .ForMember(dest => dest.Educations, opt => opt.MapFrom(src => src.Educations.Select(e => e.Name)));
             CreateMap<StudentEditDto, Student>();
 
             // Rooms

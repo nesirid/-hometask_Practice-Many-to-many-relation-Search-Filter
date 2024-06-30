@@ -16,6 +16,7 @@ namespace Domain.Entities
         [Required]
         public int Age { get; set; }
         public virtual ICollection<GroupsStudents> GroupsStudents { get; set; }
+        public ICollection<Education> Educations { get; set; }
 
     }
 }

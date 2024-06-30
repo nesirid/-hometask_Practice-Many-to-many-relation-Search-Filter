@@ -57,3 +57,4 @@ C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\Service\obj
 C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\Service\obj\Debug\net6.0\refint\Service.dll
 C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\Service\obj\Debug\net6.0\Service.pdb
 C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\Service\obj\Debug\net6.0\ref\Service.dll
+C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\Service\obj\Debug\net6.0\Service.sourcelink.json

@@ -66,3 +66,4 @@ C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\Repository\
 C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\Repository\obj\Debug\net6.0\Repository.pdb
 C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\Repository\obj\Debug\net6.0\Repository.genruntimeconfig.cache
 C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\Repository\obj\Debug\net6.0\ref\Repository.dll
+C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\Repository\obj\Debug\net6.0\Repository.sourcelink.json

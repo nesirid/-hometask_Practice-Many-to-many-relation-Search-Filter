@@ -17,7 +17,7 @@ namespace Service.DTOs.Admin.Students
         public string Email { get; set; }
         public int Age { get; set; }
         public List<GroupDto> Groups { get; set; }
-        public List<EducationDto> Educations { get; set; }
+        public IEnumerable<string> Educations { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
     }
 }

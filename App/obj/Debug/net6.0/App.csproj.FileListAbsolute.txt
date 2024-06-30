@@ -242,3 +242,4 @@ C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\App\obj\Deb
 C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\App\obj\Debug\net6.0\App.pdb
 C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\App\obj\Debug\net6.0\App.genruntimeconfig.cache
 C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\App\obj\Debug\net6.0\ref\App.dll
+C:\Users\user\Desktop\For Programing Education\BACKEND\API\TaskScool\App\obj\Debug\net6.0\App.sourcelink.json
