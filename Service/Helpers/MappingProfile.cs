@@ -16,15 +16,19 @@ namespace Service.Helpers
             // Groups
             CreateMap<GroupCreateDto, Group>()
                 .ForMember(dest => dest.RoomId, opt => opt.MapFrom(src => src.RoomId))
-                .ForMember(dest => dest.EducationId, opt => opt.MapFrom(src => src.EducationId));
+                .ForMember(dest => dest.EducationId, opt => opt.MapFrom(src => src.EducationId))
+                .ForMember(dest => dest.TeacherId, opt => opt.MapFrom(src => src.TeacherId));
             CreateMap<Group, GroupDto>()
                 .ForMember(dest => dest.RoomId, opt => opt.MapFrom(src => src.RoomId))
                 .ForMember(dest => dest.RoomName, opt => opt.MapFrom(src => src.Room != null ? src.Room.Name : null))
                 .ForMember(dest => dest.EducationId, opt => opt.MapFrom(src => src.EducationId))
-                .ForMember(dest => dest.EducationName, opt => opt.MapFrom(src => src.Education != null ? src.Education.Name : null));
+                .ForMember(dest => dest.EducationName, opt => opt.MapFrom(src => src.Education != null ? src.Education.Name : null))
+                .ForMember(dest => dest.TeacherId, opt => opt.MapFrom(src => src.TeacherId))
+                .ForMember(dest => dest.TeacherName, opt => opt.MapFrom(src => src.Teacher != null ? src.Teacher.Name : null));
             CreateMap<GroupEditDto, Group>()
                 .ForMember(dest => dest.RoomId, opt => opt.MapFrom(src => src.RoomId))
-                .ForMember(dest => dest.EducationId, opt => opt.MapFrom(src => src.EducationId));
+                .ForMember(dest => dest.EducationId, opt => opt.MapFrom(src => src.EducationId))
+                .ForMember(dest => dest.TeacherId, opt => opt.MapFrom(src => src.TeacherId));
 
 
             // Students

@@ -15,17 +15,24 @@ namespace Service.Services
     public class GroupService : IGroupService
     {
         private readonly IGroupRepository _groupRepo;
-        private readonly IMapper _mapper;
         private readonly IRoomRepository _roomRepo;
         private readonly IEducationRepository _educationRepo;
+        private readonly ITeacherRepository _teacherRepo;
+        private readonly IMapper _mapper;
         private readonly ILogger<GroupService> _logger;
 
-        public GroupService(IGroupRepository groupRepo, IRoomRepository roomRepo, IEducationRepository educationRepo, IMapper mapper, ILogger<GroupService> logger)
+        public GroupService(IGroupRepository groupRepo,
+                            IRoomRepository roomRepo, 
+                            IEducationRepository educationRepo, 
+                            ITeacherRepository teacherRepo, 
+                            IMapper mapper, 
+                            ILogger<GroupService> logger)
         {
             _groupRepo = groupRepo;
-            _mapper = mapper;
             _roomRepo = roomRepo;
             _educationRepo = educationRepo;
+            _teacherRepo = teacherRepo;
+            _mapper = mapper;
             _logger = logger;
         }
 
@@ -34,15 +41,12 @@ namespace Service.Services
             if (model == null) throw new ArgumentNullException(nameof(model));
             var group = _mapper.Map<Group>(model);
 
-            if (model.RoomId.HasValue)
+            var room = await _roomRepo.GetById(model.RoomId);
+            if (room == null)
             {
-                var room = await _roomRepo.GetById(model.RoomId.Value);
-                if (room == null)
-                {
-                    throw new KeyNotFoundException("Room not found");
-                }
-                group.RoomId = model.RoomId.Value;
+                throw new KeyNotFoundException("Room not found");
             }
+            group.RoomId = model.RoomId;
 
             var education = await _educationRepo.GetById(model.EducationId);
             if (education == null)
@@ -50,6 +54,13 @@ namespace Service.Services
                 throw new KeyNotFoundException("Education not found");
             }
             group.EducationId = model.EducationId;
+
+            var teacher = await _teacherRepo.GetById(model.TeacherId);
+            if (teacher == null)
+            {
+                throw new KeyNotFoundException("Teacher not found");
+            }
+            group.TeacherId = model.TeacherId;
 
             await _groupRepo.CreateAsync(group);
         }
@@ -61,15 +72,12 @@ namespace Service.Services
             var existingGroup = await _groupRepo.GetById(id);
             if (existingGroup == null) throw new KeyNotFoundException("Group not found");
 
-            if (model.RoomId.HasValue)
+            var room = await _roomRepo.GetById(model.RoomId);
+            if (room == null)
             {
-                var room = await _roomRepo.GetById(model.RoomId.Value);
-                if (room == null)
-                {
-                    throw new KeyNotFoundException("Room not found");
-                }
-                existingGroup.RoomId = model.RoomId.Value;
+                throw new KeyNotFoundException("Room not found");
             }
+            existingGroup.RoomId = model.RoomId;
 
             var education = await _educationRepo.GetById(model.EducationId);
             if (education == null)
@@ -77,6 +85,13 @@ namespace Service.Services
                 throw new KeyNotFoundException("Education not found");
             }
             existingGroup.EducationId = model.EducationId;
+
+            var teacher = await _teacherRepo.GetById(model.TeacherId);
+            if (teacher == null)
+            {
+                throw new KeyNotFoundException("Teacher not found");
+            }
+            existingGroup.TeacherId = model.TeacherId;
 
             _mapper.Map(model, existingGroup);
             await _groupRepo.EditAsync(id, existingGroup);

@@ -50,7 +50,12 @@ namespace Repository.Data
                 .HasOne(g => g.Education)
                 .WithMany(e => e.Groups)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+            // Group<>Teacher
+            modelBuilder.Entity<Group>()
+                .HasOne(g => g.Teacher)
+                .WithMany()
+                .HasForeignKey(g => g.TeacherId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

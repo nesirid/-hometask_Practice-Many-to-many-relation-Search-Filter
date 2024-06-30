@@ -36,10 +36,7 @@ namespace App.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] GroupCreateDto request)
         {
-            if (request == null)
-            {
-                return BadRequest(new { message = "Request cannot be null" });
-            }
+            if (request == null) return BadRequest(new { message = "Request cannot be null" });
 
             await _groupService.CreateAsync(request);
             return CreatedAtAction(nameof(Create), new { response = "Data successfully created" });
@@ -48,16 +45,10 @@ namespace App.Controllers.Admin
         [HttpPut("{id}")]
         public async Task<IActionResult> Edit(int id, [FromBody] GroupEditDto request)
         {
-            if (request == null)
-            {
-                return BadRequest(new { message = "Request cannot be null" });
-            }
+            if (request == null) return BadRequest(new { message = "Request cannot be null" });
 
-            var existingCountry = await _groupService.GetByIdAsync(id);
-            if (existingCountry == null)
-            {
-                return NotFound();
-            }
+            var existingGroup = await _groupService.GetByIdAsync(id);
+            if (existingGroup == null) return NotFound();
 
             await _groupService.EditAsync(id, request);
             return Ok(new { response = "Data successfully updated" });

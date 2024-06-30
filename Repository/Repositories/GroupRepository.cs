@@ -17,7 +17,8 @@ namespace Repository.Repositories
             return await _context.Groups
                 .Include(g => g.Education)
                 .Include(g => g.GroupsStudents).ThenInclude(gs => gs.Student)
-                .Include(g => g.Room)  
+                .Include(g => g.Room) 
+                .Include(g => g.Teacher)
                 .ToListAsync();
         }
 
@@ -26,7 +27,8 @@ namespace Repository.Repositories
             return await _context.Groups
                 .Include(g => g.Education)
                 .Include(g => g.GroupsStudents).ThenInclude(gs => gs.Student)
-                .Include(g => g.Room)  
+                .Include(g => g.Room)
+                .Include(g => g.Teacher)
                 .FirstOrDefaultAsync(g => g.Id == id);
         }
     }
