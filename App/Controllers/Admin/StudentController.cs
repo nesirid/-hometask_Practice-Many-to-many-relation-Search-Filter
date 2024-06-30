@@ -31,15 +31,12 @@ namespace App.Controllers.Admin
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] StudentCreateDto request)
+        public async Task<IActionResult> Create(StudentCreateDto request)
         {
-            if (request == null)
-            {
-                return BadRequest(new { message = "Request cannot be null" });
-            }
+            if (request == null) return BadRequest("Request cannot be null");
 
             await _studentService.CreateAsync(request);
-            return CreatedAtAction(nameof(Create), new { response = "Data successfully created" });
+            return Ok("Student created successfully");
         }
 
         [HttpPut("{id}")]

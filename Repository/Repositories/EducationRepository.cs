@@ -30,5 +30,9 @@ namespace Repository.Repositories
                 .OrderBy(e => e.Name)
                 .ToListAsync();
         }
+        public async Task<Education> GetById(int id)
+        {
+            return await _context.Educations.FindAsync(id);
+        }
     }
 }

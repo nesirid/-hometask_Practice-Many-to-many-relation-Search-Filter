@@ -40,12 +40,7 @@ namespace Repository.Migrations
                     b.Property<bool>("SoftDelete")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("Educations");
                 });
@@ -71,8 +66,7 @@ namespace Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoomId")
-                        .IsRequired()
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
                     b.Property<bool>("SoftDelete")
@@ -213,13 +207,19 @@ namespace Repository.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Education", b =>
+            modelBuilder.Entity("EducationStudent", b =>
                 {
-                    b.HasOne("Domain.Entities.Student", "Student")
-                        .WithMany("Educations")
-                        .HasForeignKey("StudentId");
+                    b.Property<int>("EducationsId")
+                        .HasColumnType("int");
 
-                    b.Navigation("Student");
+                    b.Property<int>("StudentsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EducationsId", "StudentsId");
+
+                    b.HasIndex("StudentsId");
+
+                    b.ToTable("StudentEducations", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Group", b =>
@@ -275,6 +275,21 @@ namespace Repository.Migrations
                         .HasForeignKey("GroupId");
                 });
 
+            modelBuilder.Entity("EducationStudent", b =>
+                {
+                    b.HasOne("Domain.Entities.Education", null)
+                        .WithMany()
+                        .HasForeignKey("EducationsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Student", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Entities.Education", b =>
                 {
                     b.Navigation("Groups");
@@ -294,8 +309,6 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Entities.Student", b =>
                 {
-                    b.Navigation("Educations");
-
                     b.Navigation("GroupsStudents");
                 });
 #pragma warning restore 612, 618

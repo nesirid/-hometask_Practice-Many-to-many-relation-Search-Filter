@@ -56,6 +56,11 @@ namespace Repository.Data
                 .WithMany()
                 .HasForeignKey(g => g.TeacherId)
                 .OnDelete(DeleteBehavior.Cascade);
+            //Student
+            modelBuilder.Entity<Student>()
+                .HasMany(s => s.Educations)
+                .WithMany(e => e.Students)
+                .UsingEntity(j => j.ToTable("StudentEducations"));
         }
     }
 }

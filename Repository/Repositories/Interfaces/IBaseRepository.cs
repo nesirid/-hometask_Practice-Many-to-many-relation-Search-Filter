@@ -9,6 +9,7 @@ namespace Repository.Repositories.Interfaces
         Task DeleteAsync(T entity);
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetById(int id);
+        void Attach(T entity);
 
     }
 }

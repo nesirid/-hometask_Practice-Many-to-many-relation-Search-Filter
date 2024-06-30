@@ -12,9 +12,13 @@ namespace Repository.Repositories
 {
     internal class StudentRepository : BaseRepository<Student>, IStudentRepository
     {
+        private readonly AppDbContext _context;
+
         public StudentRepository(AppDbContext context) : base(context)
         {
+            _context = context;
         }
+
         public async Task<IEnumerable<Student>> GetAllAsync()
         {
             return await _context.Students
@@ -34,6 +38,7 @@ namespace Repository.Repositories
                 .Include(s => s.GroupsStudents)
                 .ThenInclude(gs => gs.Group)
                 .ThenInclude(g => g.Room)
+                .Include(s => s.Educations)
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
     }

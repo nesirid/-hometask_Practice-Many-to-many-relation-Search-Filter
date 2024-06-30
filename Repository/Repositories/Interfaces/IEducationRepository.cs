@@ -11,5 +11,6 @@ namespace Repository.Repositories.Interfaces
     {
         Task<IEnumerable<Education>> SearchAsync(string name);
         Task<IEnumerable<Education>> GetAllSortedByNameAsync();
+        Task<Education> GetById(int id);
     }
 }

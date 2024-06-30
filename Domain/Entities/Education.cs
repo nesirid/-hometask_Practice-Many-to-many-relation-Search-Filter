@@ -11,13 +11,7 @@ namespace Domain.Entities
     {
         public string Name { get; set; }
 
-
-
-
-        public int? StudentId { get; set; }
-        public Student Student { get; set; }
-
-
+        public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<Group> Groups { get; set; }
 
     }

@@ -11,5 +11,6 @@ namespace Service.DTOs.Admin.Educations
     {
         [Required]
         public string Name { get; set; }
+
     }
 }

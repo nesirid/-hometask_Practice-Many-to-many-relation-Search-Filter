@@ -54,5 +54,9 @@ namespace Repository.Repositories
         {
             return await _entities.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }
+        public void Attach(T entity)
+        {
+            _context.Set<T>().Attach(entity);
+        }
     }
 }

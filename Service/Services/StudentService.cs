@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Repository.Data;
 using Repository.Repositories.Interfaces;
-using Service.DTOs.Admin.Educations;
 using Service.DTOs.Admin.Groups;
 using Service.DTOs.Admin.Students;
 using Service.Services.Interface;
-
 
 namespace Service.Services
 {
@@ -13,12 +13,17 @@ namespace Service.Services
     {
         private readonly IStudentRepository _studentRepo;
         private readonly IGroupRepository _groupRepo;
+        private readonly IEducationRepository _educationRepo;
         private readonly IMapper _mapper;
 
-        public StudentService(IStudentRepository studentRepo, IGroupRepository groupRepo, IMapper mapper)
+        public StudentService(IStudentRepository studentRepo,
+                              IGroupRepository groupRepo,
+                              IEducationRepository educationRepo,
+                              IMapper mapper)
         {
             _studentRepo = studentRepo;
             _groupRepo = groupRepo;
+            _educationRepo = educationRepo;
             _mapper = mapper;
         }
 
@@ -29,12 +34,17 @@ namespace Service.Services
             var group = await _groupRepo.GetById(model.GroupId);
             if (group == null) throw new KeyNotFoundException("Group not found");
 
+            var education = await _educationRepo.GetById(model.EducationId);
+            if (education == null) throw new KeyNotFoundException("Education not found");
+
             var student = _mapper.Map<Student>(model);
 
             student.GroupsStudents = new List<GroupsStudents>
             {
                 new GroupsStudents { GroupId = model.GroupId, Student = student }
             };
+
+            student.Educations = new List<Education> { education };
 
             await _studentRepo.CreateAsync(student);
         }
@@ -46,7 +56,20 @@ namespace Service.Services
             var existingStudent = await _studentRepo.GetById(id);
             if (existingStudent == null) throw new KeyNotFoundException("Student not found");
 
+            var education = await _educationRepo.GetById(model.EducationId);
+            if (education == null) throw new KeyNotFoundException("Education not found");
+
             _mapper.Map(model, existingStudent);
+
+            if (existingStudent.Educations == null)
+            {
+                existingStudent.Educations = new List<Education> { education };
+            }
+            else
+            {
+                existingStudent.Educations.Clear();
+                existingStudent.Educations.Add(education);
+            }
             await _studentRepo.EditAsync(id, existingStudent);
         }
 
@@ -65,9 +88,16 @@ namespace Service.Services
             foreach (var studentDto in studentDtos)
             {
                 var student = students.FirstOrDefault(s => s.Id == studentDto.Id);
-                if (student != null && student.GroupsStudents != null)
+                if (student != null)
                 {
-                    studentDto.Groups = _mapper.Map<List<GroupDto>>(student.GroupsStudents.Select(gs => gs.Group).ToList());
+                    if (student.GroupsStudents != null)
+                    {
+                        studentDto.Groups = _mapper.Map<List<GroupDto>>(student.GroupsStudents.Select(gs => gs.Group).ToList());
+                    }
+                    if (student.Educations != null)
+                    {
+                        studentDto.Educations = student.Educations.Select(e => e.Name).ToList();
+                    }
                 }
             }
 
@@ -82,6 +112,10 @@ namespace Service.Services
             if (student.GroupsStudents != null)
             {
                 studentDto.Groups = _mapper.Map<List<GroupDto>>(student.GroupsStudents.Select(gs => gs.Group).ToList());
+            }
+            if (student.Educations != null)
+            {
+                studentDto.Educations = student.Educations.Select(e => e.Name).ToList();
             }
             return studentDto;
         }
