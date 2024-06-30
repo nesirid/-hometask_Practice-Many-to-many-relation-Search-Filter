@@ -10,13 +10,14 @@ namespace Domain.Entities
         [Required]
         public int Capacity { get; set; }
         public List<Student> Students { get; set; }
-        public virtual ICollection<GroupsStudents> GroupsStudents { get; set; }
         public int? RoomId { get; set; } 
         public virtual Room Room { get; set; }
 
         //Education Realation
         public int EducationId { get; set; }
         public Education Education { get; set; }
+
+        public virtual ICollection<GroupsStudents> GroupsStudents { get; set; }
 
     }
 }

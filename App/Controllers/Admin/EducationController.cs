@@ -80,5 +80,19 @@ namespace App.Controllers.Admin
             await _educationService.DeleteAsync(id);
             return Ok(new { response = "Data successfully deleted" });
         }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> Search([FromQuery] string name)
+        {
+            var educations = await _educationService.SearchAsync(name);
+            return Ok(educations);
+        }
+
+        [HttpGet("sorted")]
+        public async Task<IActionResult> GetAllSortedByName()
+        {
+            var educations = await _educationService.GetAllSortedByNameAsync();
+            return Ok(educations);
+        }
     }
 }

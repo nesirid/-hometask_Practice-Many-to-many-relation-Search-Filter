@@ -1,4 +1,5 @@
-﻿using Service.DTOs.Admin.Educations;
+﻿using Domain.Entities;
+using Service.DTOs.Admin.Educations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace Service.Services.Interface
         Task CreateAsync(EducationCreateDto model);
         Task EditAsync(int id, EducationEditDto model);
         Task DeleteAsync(int id);
+        Task<IEnumerable<EducationDto>> SearchAsync(string name);
+        Task<IEnumerable<EducationDto>> GetAllSortedByNameAsync();
     }
 }

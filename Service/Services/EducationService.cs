@@ -59,5 +59,17 @@ namespace Service.Services
             if (education == null) throw new KeyNotFoundException("Education not found");
             return _mapper.Map<EducationDto>(education);
         }
+
+        public async Task<IEnumerable<EducationDto>> SearchAsync(string name)
+        {
+            var educations = await _educationRepo.SearchAsync(name);
+            return _mapper.Map<IEnumerable<EducationDto>>(educations);
+        }
+
+        public async Task<IEnumerable<EducationDto>> GetAllSortedByNameAsync()
+        {
+            var educations = await _educationRepo.GetAllSortedByNameAsync();
+            return _mapper.Map<IEnumerable<EducationDto>>(educations);
+        }
     }
 }

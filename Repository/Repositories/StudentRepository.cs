@@ -15,14 +15,17 @@ namespace Repository.Repositories
         public StudentRepository(AppDbContext context) : base(context)
         {
         }
-        public override async Task<IEnumerable<Student>> GetAllAsync()
+        public async Task<IEnumerable<Student>> GetAllAsync()
         {
             return await _context.Students
-                 .Include(s => s.GroupsStudents)
-                 .ThenInclude(gs => gs.Group)
-                 .ThenInclude(g => g.Room)
-                 .Include(s => s.Educations)
-                 .ToListAsync();
+                .Include(s => s.GroupsStudents)
+                .ThenInclude(gs => gs.Group)
+                .ThenInclude(g => g.Room)
+                .Include(s => s.GroupsStudents)
+                .ThenInclude(gs => gs.Group)
+                .ThenInclude(g => g.Education)
+                .Include(s => s.Educations)
+                .ToListAsync();
         }
 
         public override async Task<Student> GetById(int id)

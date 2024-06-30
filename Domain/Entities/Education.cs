@@ -10,6 +10,15 @@ namespace Domain.Entities
     public class Education : BaseEntity
     {
         public string Name { get; set; }
+
+
+
+
+        public int? StudentId { get; set; }
+        public Student Student { get; set; }
+
+
         public virtual ICollection<Group> Groups { get; set; }
+
     }
 }
